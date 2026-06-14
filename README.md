@@ -70,5 +70,6 @@ The current spec verifies that a valid SauceDemo user can:
 
 ## Notes
 
-- Tests currently use the public SauceDemo site directly.
+- Tests currently use the public SauceDemo site directly: https://www.saucedemo.com/
+- Test Cases Are written in Jira: https://swaglabsdemo.atlassian.net/
 - Playwright is configured to run against desktop Chromium, Firefox, and WebKit.
