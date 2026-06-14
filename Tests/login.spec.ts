@@ -29,6 +29,12 @@ async function successfulLogin(page: any) {
   await expect(page.locator(".product_sort_container")).toBeVisible();
 }
 
+async function invalidLogin(page: any){
+  // Expected Results for invalid login
+  await expect(page.locator(".error-message-container")).toBeVisible();
+  await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Username and password do not match any user in this service');
+}
+
 test('SL-7: Verify user can login with valid credentials', async ({page}) => {
 
   // Enter Valid Credentials
@@ -40,6 +46,18 @@ test('SL-7: Verify user can login with valid credentials', async ({page}) => {
 
   // Expected Results for successful login
   await successfulLogin(page);
+});
+
+test('SL-8: Verify that system handles invalid login credentials', async ({page}) => {
+  // Enter Invalid Credentials
+  await page.locator("#user-name").fill('user_hani');
+  await page.locator("#password").fill('password@123');
+
+  // Click login button
+  await page.locator("#login-button").click();
+
+  // Expected Results for invalid login
+  await invalidLogin(page);
 });
 
 test.afterAll('Expected Results', async ({ page }) => {
