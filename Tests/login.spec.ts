@@ -60,6 +60,15 @@ test('SL-8: Verify that system handles invalid login credentials', async ({page}
   await invalidLogin(page);
 });
 
+test('SL-9: Verify that system handles empty login credentials', async ({page}) => {
+  // Click login button without entering credentials
+  await page.locator("#login-button").click();
+
+  // Expected Results for empty login
+  await expect(page.locator(".error-message-container")).toBeVisible();
+  await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Username is required');
+});
+
 test.afterAll('Expected Results', async ({ page }) => {
   console.log('Login Tests Completed');
   await page.close();
