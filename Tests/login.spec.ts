@@ -24,6 +24,7 @@ async function successfulLogin(page: any) {
 
 async function invalidLogin(page: any){
   // Expected Results for invalid login
+  await expect(page).toHaveURL('https://www.saucedemo.com/');
   await expect(page.locator(".error-message-container")).toBeVisible();
   await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Username and password do not match any user in this service');
 }
@@ -58,6 +59,7 @@ test('SL-9: Verify that system handles empty login credentials', async ({page}) 
   await page.locator("#login-button").click();
 
   // Expected Results for empty login
+  await expect(page).toHaveURL('https://www.saucedemo.com/');
   await expect(page.locator(".error-message-container")).toBeVisible();
   await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Username is required');
 });
@@ -94,6 +96,7 @@ test('SL-12: Verify that system handles empty username', async ({page}) => {
   await page.locator("#login-button").click();
 
   // Expected Results for empty password
+  await expect(page).toHaveURL('https://www.saucedemo.com/');
   await expect(page.locator(".error-message-container")).toBeVisible();
   await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Username is required');
 });
@@ -106,6 +109,7 @@ test('SL-13: Verify that system handles empty password', async ({page}) => {
   await page.locator("#login-button").click();
 
   // Expected Results for empty password
+  await expect(page).toHaveURL('https://www.saucedemo.com/');
   await expect(page.locator(".error-message-container")).toBeVisible();
   await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Password is required');
 });
@@ -132,4 +136,18 @@ test('SL-16: Verify that system handles script injections', async ({page}) => {
 
   // Expected Results for Script Injection
   await invalidLogin(page);
+});
+
+test('SL-17: Verify locked_out_user cannot login', async ({page}) => {
+  // Enter Credentials for locked_out_user
+  await page.locator("#user-name").fill('locked_out_user');
+  await page.locator("#password").fill('secret_sauce');
+
+  // Click login button
+  await page.locator("#login-button").click();
+
+  // Expected Results for locked_out_user
+  await expect(page).toHaveURL('https://www.saucedemo.com/');
+  await expect(page.locator(".error-message-container")).toBeVisible();
+  await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Sorry, this user has been locked out.');
 });
