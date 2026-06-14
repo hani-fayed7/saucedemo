@@ -69,6 +69,18 @@ test('SL-9: Verify that system handles empty login credentials', async ({page}) 
   await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Username is required');
 });
 
+test('SL-10: Verify that system handles invalid username', async ({page}) => {
+  // Enter Invalid Username and Valid Password
+  await page.locator("#user-name").fill('user_hani');
+  await page.locator("#password").fill('secret_sauce');
+  
+  // Click login button
+  await page.locator("#login-button").click();
+
+  // Expected Results for invalid username
+  await invalidLogin(page);
+});
+
 test.afterAll('Expected Results', async ({ page }) => {
   console.log('Login Tests Completed');
   await page.close();
