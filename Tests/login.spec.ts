@@ -121,3 +121,15 @@ test('SL-15: Verify that system handles SQL injections', async ({page}) => {
   // Expected Results for SQL Injection
   await invalidLogin(page);
 });
+
+test('SL-16: Verify that system handles script injections', async ({page}) => {
+  // Enter Script Injection in username and password fields
+  await page.locator("#user-name").fill('<script>alert(1)</script>');
+  await page.locator("#password").fill('secret_sauce');
+
+  // Click login button
+  await page.locator("#login-button").click();
+
+  // Expected Results for Script Injection
+  await invalidLogin(page);
+});
