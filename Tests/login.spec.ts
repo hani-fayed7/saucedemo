@@ -96,7 +96,7 @@ test('SL-12: Verify that system handles empty username', async ({page}) => {
   // Expected Results for empty password
   await expect(page.locator(".error-message-container")).toBeVisible();
   await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Username is required');
-});  
+});
 
 test('SL-13: Verify that system handles empty password', async ({page}) => {
   // Enter Username but leave password empty
@@ -108,4 +108,16 @@ test('SL-13: Verify that system handles empty password', async ({page}) => {
   // Expected Results for empty password
   await expect(page.locator(".error-message-container")).toBeVisible();
   await expect(page.locator("[data-test='error']")).toHaveText('Epic sadface: Password is required');
-});  
+});
+
+test('SL-15: Verify that system handles SQL injections', async ({page}) => {
+  // Enter SQL Injection in username and password fields
+  await page.locator("#user-name").fill('OR 1=1');
+  await page.locator("#password").fill('secret_sauce');
+
+  // Click login button
+  await page.locator("#login-button").click();
+
+  // Expected Results for SQL Injection
+  await invalidLogin(page);
+});
