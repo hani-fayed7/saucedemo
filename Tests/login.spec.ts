@@ -81,6 +81,18 @@ test('SL-10: Verify that system handles invalid username', async ({page}) => {
   await invalidLogin(page);
 });
 
+test('SL-11: Verify that system handles invalid password', async ({page}) => {
+  // Enter Valid Username and Invalid Password
+  await page.locator("#user-name").fill('standard_user');
+  await page.locator("#password").fill('password@123');
+  
+  // Click login button
+  await page.locator("#login-button").click();
+
+  // Expected Results for invalid username
+  await invalidLogin(page);
+});
+
 test.afterAll('Expected Results', async ({ page }) => {
   console.log('Login Tests Completed');
   await page.close();
