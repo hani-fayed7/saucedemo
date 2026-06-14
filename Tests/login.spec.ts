@@ -1,15 +1,8 @@
 import { test, expect } from '@playwright/test';
 
-test.beforeAll('Preconditions', async ({ page }) => {
-  console.log('Starting Login Tests');
-});
-
 test.beforeEach('Preconditions', async ({ page }) => {
-  console.log('Navigating To The Website');
-
    // Navigate to the login page
   await page.goto('https://www.saucedemo.com/');
-
 });
 
 async function successfulLogin(page: any) {
@@ -91,9 +84,4 @@ test('SL-11: Verify that system handles invalid password', async ({page}) => {
 
   // Expected Results for invalid username
   await invalidLogin(page);
-});
-
-test.afterAll('Expected Results', async ({ page }) => {
-  console.log('Login Tests Completed');
-  await page.close();
 });
