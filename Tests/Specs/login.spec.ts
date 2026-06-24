@@ -31,13 +31,16 @@ async function invalidLogin(page: any){
   await expect(page).toHaveURL('https://www.saucedemo.com/');
   await expect(page.locator(loginPage.errorMsgContainerLocator)).toBeVisible();
 
-  if (page.locator(loginPage.usernameLocator) == ""){
+  const username = await page.locator(loginPage.usernameLocator).inputValue();
+  const password = await page.locator(loginPage.passwordLocator).inputValue();
+
+  if (username === appSettings.Login.Username.Empty){
     await expect(page.locator(loginPage.errorMsgLocator)).toHaveText(loginPage.usernameRequiredMsg);
   }
-  else if (page.locator(loginPage.passwordLocator) == ""){
+  else if (password === appSettings.Login.Password.Empty){
     await expect(page.locator(loginPage.errorMsgLocator)).toHaveText(loginPage.passwordRequiredMsg);
   }
-  else if (page.locator(loginPage.usernameLocator) == appSettings.Login.Username.lockedOutUser){
+  else if (username === appSettings.Login.Username.lockedOutUser){
     await expect(page.locator(loginPage.errorMsgLocator)).toHaveText(loginPage.lockedOutMsg);
   }
   else await expect(page.locator(loginPage.errorMsgLocator)).toHaveText(loginPage.invalidCredentialsMsg);
@@ -73,9 +76,7 @@ test('SL-9: Verify that system handles empty login credentials', async ({page}) 
   await page.locator(loginPage.loginBtnLocator).click();
 
   // Expected Results for empty login
-  await expect(page).toHaveURL('https://www.saucedemo.com/');
-  await expect(page.locator(loginPage.errorMsgContainerLocator)).toBeVisible();
-  await expect(page.locator(loginPage.errorMsgLocator)).toHaveText(loginPage.usernameRequiredMsg);
+  await invalidLogin(page);
 });
 
 test('SL-10: Verify that system handles invalid username', async ({page}) => {
@@ -110,9 +111,7 @@ test('SL-12: Verify that system handles empty username', async ({page}) => {
   await page.locator(loginPage.loginBtnLocator).click();
 
   // Expected Results for empty password
-  await expect(page).toHaveURL('https://www.saucedemo.com/');
-  await expect(page.locator(loginPage.errorMsgContainerLocator)).toBeVisible();
-  await expect(page.locator(loginPage.errorMsgLocator)).toHaveText(loginPage.usernameRequiredMsg);
+  await invalidLogin(page);
 });
 
 test('SL-13: Verify that system handles empty password', async ({page}) => {
@@ -123,9 +122,7 @@ test('SL-13: Verify that system handles empty password', async ({page}) => {
   await page.locator(loginPage.loginBtnLocator).click();
 
   // Expected Results for empty password
-  await expect(page).toHaveURL('https://www.saucedemo.com/');
-  await expect(page.locator(loginPage.errorMsgContainerLocator)).toBeVisible();
-  await expect(page.locator(loginPage.errorMsgLocator)).toHaveText(loginPage.passwordRequiredMsg);
+  await invalidLogin(page);
 });
 
 test('SL-15: Verify that system handles SQL injections', async ({page}) => {
@@ -161,7 +158,5 @@ test('SL-17: Verify locked_out_user cannot login', async ({page}) => {
   await page.locator(loginPage.loginBtnLocator).click();
 
   // Expected Results for locked_out_user
-  await expect(page).toHaveURL('https://www.saucedemo.com/');
-  await expect(page.locator(loginPage.errorMsgContainerLocator)).toBeVisible();
-  await expect(page.locator(loginPage.errorMsgLocator)).toHaveText(loginPage.lockedOutMsg);
+  await invalidLogin(page);
 });
