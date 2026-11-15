@@ -94,7 +94,7 @@ Test IDs (SL-xx) are placeholder Jira keys.
 
 | Spec | IDs | Covers |
 | --- | --- | --- |
-| `login.spec.ts` | SL-01 to SL-17 | Valid login, post-login UI, invalid credentials, empty fields, locked-out user, SQL and script injection |
+| `login.spec.ts` | SL-7 to SL-17 | Valid login, post-login UI, invalid credentials, empty fields, locked-out user, SQL and script injection |
 | `products.spec.ts` | SL-18 to SL-28 | Inventory display, 4 sort options, add/remove from inventory, product details, add from details, back to products |
 | `cart.spec.ts` | SL-29 to SL-33 | Products in cart, remove, continue shopping, empty cart, checkout with empty cart (known bug) |
 | `checkout.spec.ts` | SL-34 to SL-42 | Valid info, empty field errors, cancel, overview items and totals (8% tax), finish order, back home |
