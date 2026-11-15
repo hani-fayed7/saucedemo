@@ -104,13 +104,13 @@ test('SL-11: Verify that system handles invalid password', async ({page}) => {
 });
 
 test('SL-12: Verify that system handles empty username', async ({page}) => {
-  // Enter Username but leave password empty
+  // Enter Password but leave username empty
   await page.locator(loginPage.passwordLocator).fill(appSettings.Login.Password.Valid);
 
   // Click login button
   await page.locator(loginPage.loginBtnLocator).click();
 
-  // Expected Results for empty password
+  // Expected Results for empty username
   await invalidLogin(page);
 });
 
