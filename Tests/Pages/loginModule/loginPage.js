@@ -9,7 +9,8 @@ class LoginPage{
         this.invalidCredentialsMsg = 'Epic sadface: Username and password do not match any user in this service',
         this.usernameRequiredMsg = 'Epic sadface: Username is required',
         this.passwordRequiredMsg = 'Epic sadface: Password is required',
-        this.lockedOutMsg = 'Epic sadface: Sorry, this user has been locked out.'
+        this.lockedOutMsg = 'Epic sadface: Sorry, this user has been locked out.',
+        this.inventoryAccessDeniedMsg = "Epic sadface: You can only access '/inventory.html' when you are logged in."
     }   
 
 }
